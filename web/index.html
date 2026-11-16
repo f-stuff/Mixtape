@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Mixtape</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+<div class="appShell">
+  <aside class="sidebar">
+    <div class="logoRow">
+      <div class="logoIcon"><span class="recordHole"></span></div>
+      <div class="logoTitle">Mixtape</div>
+    </div>
+    <nav class="navigation" aria-label="Main navigation">
+      <button class="navButton active" data-tab="discover"><span class="navIcon">✧</span><span>Discover</span></button>
+      <button class="navButton" data-tab="links"><span class="navIcon">↗</span><span>Paste links</span></button>
+      <button class="navButton" data-tab="queue"><span class="navIcon">▤</span><span>My queue</span><span id="navQueueCount" class="navCount" hidden>0</span></button>
+      <button class="navButton" data-tab="settings"><span class="navIcon">⚙</span><span>Settings</span></button>
+    </nav>
+    <div class="sideBottom">
+      <div class="trayHelp">Mixtape stays in the tray while downloads are running.</div>
+      <div class="versionLine">Mixtape <span id="appVersion">1.0</span> <span class="versionDot">·</span> Windows portable</div>
+    </div>
+  </aside>
+  <main class="mainContent">
+    <header class="topbar">
+      <div class="breadcrumbs" id="breadcrumbs">MIXTAPE <span>/</span> DISCOVER</div>
+      <div class="topbarRight"><span class="onlineDot"></span><span id="topStatus">Getting ready</span><button class="pillButton" id="topOpenFolder">↗ Open music folder</button></div>
+    </header>
+    <div class="contentPane">
+      <section class="setupBanner" id="setupBanner" hidden>
+        <div class="setupIcon" id="setupIcon">↓</div>
+        <div class="setupBody"><strong id="setupTitle">Getting everything ready</strong><p id="setupMessage">Preparing the app's audio tools…</p><div class="setupProgress"><div id="setupProgressFill"></div></div></div>
+        <button id="setupRetry" class="secondaryButton small" hidden>Try again</button>
+      </section>
+      <section class="appUpdateBanner" id="appUpdateBanner" aria-label="Mixtape update" hidden>
+        <div class="appUpdateText"><strong id="appUpdateTitle">Mixtape update available</strong><p id="appUpdateMessage">A newer version is ready on GitHub.</p></div>
+        <div class="appUpdateActions"><button id="applyAppUpdate" class="primaryButton small" type="button">Update &amp; restart</button><button id="dismissAppUpdate" class="textButton" type="button">Later</button></div>
+      </section>
+      <section class="view active" id="view-discover">
+        <div class="hero">
+          <h1>Find an artist</h1>
+          <p class="heroDescription">Browse albums and add them to your queue.</p>
+          <form id="artistSearchForm" class="searchBox">
+            <span class="searchIcon">⌕</span><input id="artistSearch" autocomplete="off" maxlength="120" aria-label="Artist name" placeholder="Search for an artist…" required>
+            <button class="primaryButton" type="submit" id="artistSearchButton">Find artist <span>→</span></button>
+          </form>
+          <div class="suggestions"><span>EXAMPLES</span><button class="suggestion" data-artist="Radiohead">Radiohead</button><button class="suggestion" data-artist="Taylor Swift">Taylor Swift</button><button class="suggestion" data-artist="Daft Punk">Daft Punk</button></div>
+        </div>
+        <div class="resultsBlock" id="artistResults" hidden></div>
+        <div class="resultsBlock" id="albumResults" hidden></div>
+        <div id="discoverEmpty" class="introNote">Select an artist to view their studio albums.</div>
+      </section>
+      <section class="view" id="view-links">
+        <div class="pageHeading"><h1>Add links</h1><p>Paste YouTube video or playlist links, one per line.</p></div>
+        <div class="inputPanel">
+          <div class="panelTop"><div class="panelIcon">↗</div><div><h2>YouTube links</h2><p>Videos and playlists</p></div></div>
+          <textarea id="linksInput" rows="8" spellcheck="false" placeholder="https://music.youtube.com/watch?v=...&#10;https://www.youtube.com/playlist?list=...&#10;https://youtu.be/..."></textarea>
+          <div class="panelFooter"><span id="linkCount" class="hint">Add as many as you like, one per line</span><button id="linksAddButton" class="primaryButton">Add to queue <span>→</span></button></div>
+        </div>
+        <div class="softNote">Video links download one recording; playlist links download multiple recordings. Files are saved as MP3.</div>
+      </section>
+      <section class="view" id="view-queue">
+        <div class="queueHeading"><div><h1>Download queue</h1><p>Uncheck songs you don't want. Active downloads continue in the tray; closing an idle page quits Mixtape.</p></div><div class="queueControls"><button class="secondaryButton" id="retryFailed" hidden>↻ Retry failed</button><button class="secondaryButton" id="openMusicQueue">↗ Music folder</button><button class="secondaryButton" id="pauseQueue" type="button" aria-pressed="false" disabled>Ⅱ Pause queue</button></div></div><p id="queuePauseNote" class="queuePauseNote" role="status" hidden></p>
+        <div class="statsGrid"><div class="statTile"><span>COMPLETED</span><strong id="statComplete">0</strong><small>Saved files</small></div><div class="statTile"><span>QUEUED</span><strong id="statPending">0</strong><small>Pending or active</small></div><div class="statTile"><span>NEEDS REVIEW</span><strong id="statReview">0</strong><small>Unconfirmed matches</small></div></div>
+        <div class="queueSectionHeader"><h2>All music</h2><div class="filters"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="working">In progress</button><button class="filter" data-filter="review">Needs review</button><button class="filter" data-filter="done">Finished</button></div></div>
+        <div id="queueList" class="queueList"></div>
+        <div id="queueEmpty" class="emptyQueue"><div class="emptySymbol">♫</div><h3>No downloads yet</h3><p>Find an artist or add links to start.</p><button class="primaryButton" id="emptyGoDiscover">Find an artist</button></div>
+        <div class="queueBottom"><button id="clearFinished" class="textButton">Clear finished and failed items</button><span>Clearing history does not delete downloaded files.</span></div>
+      </section>
+      <section class="view" id="view-settings">
+        <div class="pageHeading"><h1>Settings</h1><p>Music storage and download options.</p></div>
+        <form id="settingsForm" class="settingsCard">
+          <div class="settingRow"><div><h3>Download folder</h3><p>Artist and album subfolders are created here.</p></div><label class="pathLabel" for="outputDir">Music folder</label><div class="pathPickerRow"><input id="outputDir" class="pathInput" placeholder="C:\Users\...\Music\Mixtape"><button id="browseOutputDir" type="button" class="secondaryButton browseButton">Browse…</button></div><p class="pathHint">Choose a folder, then click Save settings.</p></div>
+          <div class="settingRow settingSwitchRow"><div><h3>Keep the computer awake</h3><p>Prevents Windows from sleeping while a download job is active.</p></div><label class="toggle"><input type="checkbox" id="keepAwake"><span class="toggleSlider"></span></label></div>
+          <button type="submit" class="primaryButton saveSettings">Save settings <span>✓</span></button>
+        </form>
+        <div class="settingsCard toolsCard"><div><h3>Audio tools</h3><p>Mixtape checks for yt-dlp updates weekly when the queue is idle. You can also check manually.</p></div><div class="settingsToolRow"><span id="toolStatus">Checking…</span><button id="refreshTools" class="secondaryButton">Check now</button></div></div>
+        <div class="settingsCard toolsCard"><div><h3>Mixtape updates</h3><p id="appUpdateSettingsStatus">Checking GitHub Releases…</p></div><div class="settingsToolRow"><span id="appUpdateSettingsVersion">Current version: 1.4.0</span><button id="checkAppUpdate" type="button" class="secondaryButton">Check for updates</button><button id="applyAppUpdateSettings" type="button" class="primaryButton small" hidden>Update &amp; restart</button></div></div>
+        <div class="settingsCard toolsCard"><div><h3>Quit Mixtape</h3><p>Closing the last tab while idle exits Mixtape. If you close during downloads, the batch finishes in the tray; reopen and close the page afterward to exit. Quit here or from the tray menu to stop immediately.</p></div><button id="quitApp" class="dangerButton">Quit Mixtape</button></div>
+        <p class="smallPrint">Use Mixtape to download audio you're authorised to save. Music information comes from MusicBrainz; album images from Cover Art Archive. The downloader is yt-dlp, with FFmpeg and Deno. Audio quality can never exceed the original recording.</p>
+      </section>
+    </div>
+  </main>
+</div>
+<div id="selectionBar" class="selectionBar" hidden><div><strong id="selectedCount">0 albums selected</strong><span id="selectedArtist">Add albums to queue</span></div><div class="selectionButtons"><button id="clearSelected" class="selectionClear">Clear</button><button id="addSelected" class="primaryButton">Add to queue →</button></div></div>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

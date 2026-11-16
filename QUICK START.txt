@@ -1,0 +1,129 @@
+MIXTAPE - QUICK START
+===============================================
+Mixtape v1.4.1  |  Windows 10 / 11, 64-bit
+
+GET STARTED
+-----------
+1. Extract the ZIP into a folder (for example, your Desktop).
+2. Double-click Mixtape.exe.
+3. Mixtape opens in your Windows default browser (including Firefox).
+4. Search for an artist, choose the correct artist, tick albums, and
+   click Add to queue. You can also paste YouTube or YouTube Music
+   video and playlist links in the Paste links screen.
+5. Leave Mixtape running. Your songs arrive in the Music folder.
+
+CHOOSING SONGS INSIDE AN ALBUM
+------------------------------
+Open My queue and expand an album (new albums open their song lists
+automatically). Uncheck any songs you don't want downloaded.
+Mixtape remembers those as Skipped, even after a restart. Check a song
+again to put it back in the download queue. If a song is already saved,
+the checkbox is disabled; no downloaded MP3s are deleted.
+
+THE FIRST TIME YOU OPEN IT
+--------------------------
+Mixtape downloads three free helper tools automatically: yt-dlp,
+FFmpeg and Deno. No Python, terminal, installer, or administrator
+permission is needed. This first-time setup DOES require an Internet
+connection and may download around 170 MB. The screen shows progress.
+After that, these helpers are cached. You will still need Internet
+access for music searches and downloads.
+
+WHERE YOUR MP3S GO
+------------------
+Default location: your Windows Music folder, inside a Mixtape folder.
+
+For albums:
+  Music\Mixtape\Artist\Album (Year)\01 - Song Name.mp3
+
+For links:
+  Music\Mixtape\From Links\Video Title [video-id].mp3
+
+Use Settings > Browse... to choose a music folder, then click Save settings.
+You can also paste a path into the box.
+
+HOW TO KEEP IT RUNNING
+----------------------
+You may close the Mixtape window while a download is running.
+Selected songs continue downloading in the tray. Windows can show
+"Downloading in background" when you close the window, followed by
+"Done" when the batch finishes (subject to notification settings).
+You can then reopen the window and close it again to exit Mixtape.
+If the last window is closed when no download is active (for example,
+six tracks saved and six unchecked), Mixtape exits automatically after
+about 3 seconds. Skipped, failed, or waiting tracks remain saved.
+Paused queues can close normally; the PC must stay on for downloads.
+The tray tooltip and menu status match the webpage (e.g. Finished).
+If Firefox misses both close requests, the fallback checks for an
+abandoned browser tab after 30 seconds, then allows the closing grace.
+Click a notification or left-click the tray icon to reopen Mixtape,
+or right-click the tray icon for
+Open Mixtape, Open music folder, and Quit Mixtape. It may appear under
+the Windows taskbar's hidden-icons arrow. You can also double-click
+Mixtape.exe again to reopen the page. To stop it completely, use
+Quit Mixtape from the tray menu or Settings. Open tabs detect that the
+backend has quit and attempt to close themselves. Firefox generally blocks
+script-closing tabs opened by an external app; if that happens Mixtape shows
+"Mixtape is closed" instead. Close that tab manually. Other tabs are safe.
+
+KEEP MIXTAPE UP TO DATE
+-----------------------
+Mixtape checks the public f-stuff/Mixtape GitHub Releases page automatically.
+When a newer version is available, click Update & restart. It downloads
+and verifies the ZIP, applies it after the current app closes, and reopens.
+Downloads must be idle (or the queue paused) before installing. Music files,
+settings and your saved queue are kept. You can also check from
+Settings > Mixtape updates > Check for updates.
+
+PAUSING DOWNLOADS
+-----------------
+Choose Pause queue in My queue to stop new downloads from starting.
+Any song currently downloading is allowed to finish. Choose Resume queue
+to continue. Mixtape remembers the pause setting after a restart.
+
+IF A SONG NEEDS REVIEW
+----------------------
+Sometimes a YouTube result is a cover, a live performance, or otherwise
+uncertain. Mixtape will flag it in the queue rather than silently
+choose a doubtful recording. Pick a suggested match or paste a known
+song link to continue.
+
+IF FIRST-TIME SETUP OR DOWNLOADS FAIL
+-------------------------------------
+- Check your Internet connection and press Try again.
+- In My queue, failed songs, albums and links have an explanation.
+  Open Technical details for more information, or press Copy error to
+  share a diagnostic report. Review any local paths or URLs first.
+- Press Retry failed (N) to retry every failed download.
+  Tracks marked Needs review still require you to choose a match.
+- Mixtape checks for yt-dlp updates automatically about once a week
+  while the queue is idle. Settings > Check now can check immediately.
+- Some YouTube videos may be region-limited, unavailable, or require
+  sign-in. Mixtape cannot guarantee that every video can be downloaded.
+- Artist and album searches automatically retry brief MusicBrainz
+  outages a couple of times; you can retry manually if all attempts fail.
+- This app was cross-compiled for Windows but not yet tested on a real
+  Windows PC; if you encounter a problem, the Source ZIP contains
+  the app's full source code.
+
+WINDOWS SECURITY NOTE
+---------------------
+This is a newly built, unsigned application. Windows may show a
+SmartScreen security warning. Only run software you trust and verify
+its origin. Mixtape serves a web page only on 127.0.0.1 (your own PC).
+
+DATA AND PRIVACY
+----------------
+The queue and settings are saved in %LOCALAPPDATA%\Mixtape\queue.json.
+The downloaded tools are stored in %LOCALAPPDATA%\Mixtape\tools.
+Music searches contact MusicBrainz and YouTube; cover art comes from
+Cover Art Archive. No Mixtape account is required.
+
+Please download and save only recordings you have permission to use.
+
+FINDING DOWNLOADED FILES
+------------------------
+In the queue, choose Show file beside a finished song to select its MP3
+in Explorer. Choose Open folder beside an album with completed songs to
+open that album's directory. For playlist links, Open folder shows the
+From Links directory.
